@@ -21,6 +21,8 @@ let attempts = ['jusen', 'wowze']
 createGrid()
 updateGrid()
 
+window.addEventListener('keydown', handleKeyInput)
+
 function createGrid() {
   for (let i = 0; i < grid_cols; i++) {
     let row = document.createElement('div')
@@ -55,6 +57,29 @@ function drawCurrentAttempt(row, attempt) {
   for (let i = 0; i < 5; i++) {
     let cell = row.children[i]
     cell.textContent = attempt[i] ?? ''
+  }
+}
+
+function handleKeyInput(e) {
+  let letter = e.key.toLowerCase()
+  if (letter == 'enter') {
+    if (currentAttempt.length != 5) {
+      alert('Not enough letters')
+      return
+    }
+
+    if (!wordList.include(currentAttempt)) {
+      alert('Guess not in word list')
+      return
+    }
+    attempts.push(currentAttempt)
+    currentAttempt = ''
+  } else if (letter == 'backspace') {
+    currentAttempt = currentAttempt.slice(0, currentAttempt.length - 1)
+  } else if (/[a-z]/.test(letter)) {
+    if (currentAttempt.length < 5) {
+      currentAttempt += letter
+    }
   }
 }
 
