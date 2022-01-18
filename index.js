@@ -15,8 +15,11 @@ let randIndex = Math.floor(Math.random() * wordList.length)
 let key = wordList[randIndex]
 console.log('key is', key)
 
-let currentAttempt = ''
-let attempts = ['money', 'spain', 'train', 'justi']
+let currentAttempt = 'prest'
+let attempts = ['jusen', 'wowze']
+
+createGrid()
+updateGrid()
 
 function createGrid() {
   for (let i = 0; i < grid_cols; i++) {
@@ -24,14 +27,11 @@ function createGrid() {
     for (let i = 0; i < grid_rows; i++) {
       let cell = document.createElement('div')
       cell.className = 'cell'
-      cell.textContent = 'T'
       row.appendChild(cell)
     }
     grid.appendChild(row)
   }
 }
-
-createGrid()
 
 function updateGrid() {
   let row = grid.firstChild
@@ -70,5 +70,3 @@ function drawBgColor(attempt, index) {
     return '#b49f3a'
   }
 }
-
-updateGrid()
