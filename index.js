@@ -4,19 +4,22 @@ const grid_rows = 5
 const grid_cols = 6
 
 var wordList = [
-  /*	'bingo',
-	'dizzy',
-	'equip',
-	'patio',*/
+  'bingo',
+  'dizzy',
+  'equip',
+  'patio',
   'juice',
+  'water',
+  'money',
+  'coder',
 ]
 
 let randIndex = Math.floor(Math.random() * wordList.length)
 let key = wordList[randIndex]
 console.log('key is', key)
 
-let currentAttempt = 'prest'
-let attempts = ['jusen', 'wowze']
+let currentAttempt = ''
+let attempts = []
 
 createGrid()
 updateGrid()
@@ -60,15 +63,20 @@ function drawCurrentAttempt(row, attempt) {
   }
 }
 
+/* 
+  Handling any key input (event)
+*/
+
 function handleKeyInput(e) {
   let letter = e.key.toLowerCase()
+
   if (letter == 'enter') {
     if (currentAttempt.length != 5) {
       alert('Not enough letters')
       return
     }
 
-    if (!wordList.include(currentAttempt)) {
+    if (!wordList.includes(currentAttempt)) {
       alert('Guess not in word list')
       return
     }
@@ -76,11 +84,14 @@ function handleKeyInput(e) {
     currentAttempt = ''
   } else if (letter == 'backspace') {
     currentAttempt = currentAttempt.slice(0, currentAttempt.length - 1)
-  } else if (/[a-z]/.test(letter)) {
-    if (currentAttempt.length < 5) {
-      currentAttempt += letter
+  } else if (/^[a-zA-Z]+$/.test(letter)) {
+    if (e.code.substring(0, 3) == 'Key') {
+      if (currentAttempt.length < 5) {
+        currentAttempt += letter
+      }
     }
   }
+  updateGrid()
 }
 
 function drawBgColor(attempt, index) {
